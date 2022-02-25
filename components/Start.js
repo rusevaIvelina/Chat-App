@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, ImageBackground, Image } from 'react-native';
+import BackgroundImage from '../assets/background-image.p'
 
 
 export default class Start extends React.Component {
@@ -30,7 +31,7 @@ export default class Start extends React.Component {
         return (
             <View style={StyleSheet.container}>
 
-            <ImageBackground style={styles.container} source={require('../BgImage.png')} resizeMode="cover" >
+            <ImageBackground  source={BackgroundImage} resizeMode="cover" style={styles.backgroundImage} >
 
                     <View style={StyleSheet.titleBox}>
                         <Text style={StyleSheet.title}>Chat App</Text>
