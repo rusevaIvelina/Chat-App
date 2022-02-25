@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+//import { StyleSheet } from 'react-native';
 //importing the two screens the user will navigate between 
 import Chat from './components/Chat';
 import Start from './components/Start';
