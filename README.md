@@ -9,3 +9,5 @@ before joining the chat.
 ● The chat must provide users with two additional communication features: sending images
 and location data.
 ● Data gets stored online and offline.
+
+More info coming soon
