@@ -30,7 +30,7 @@ export default class Start extends React.Component {
         return (
             <View style={StyleSheet.container}>
 
-               <ImageBackground style={styles.container} source={require('../BgImage.png')} resizeMode="cover" >
+            <ImageBackground style={styles.container} source={require('../BgImage.png')} resizeMode="cover" >
 
                     <View style={StyleSheet.titleBox}>
                         <Text style={StyleSheet.title}>ChatApp</Text>
