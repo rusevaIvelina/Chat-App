@@ -33,7 +33,7 @@ export default class Start extends React.Component {
             <ImageBackground style={styles.container} source={require('../BgImage.png')} resizeMode="cover" >
 
                     <View style={StyleSheet.titleBox}>
-                        <Text style={StyleSheet.title}>ChatApp</Text>
+                        <Text style={StyleSheet.title}>Chat App</Text>
                     </View>
                      
                      <View style={StyleSheet.box1}>
