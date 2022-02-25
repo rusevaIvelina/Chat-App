@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, ImageBackground, Image } from 'react-native';
-import BackgroundImage from '../assets/background-image.p'
+import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
 
 export default class Start extends React.Component {
@@ -29,36 +29,36 @@ export default class Start extends React.Component {
 
     render() {
         return (
-            <View style={StyleSheet.container}>
+            <View style={styles.container}>
 
-            <ImageBackground  source={BackgroundImage} resizeMode="cover" style={styles.backgroundImage} >
+            <ImageBackground  source={require('../assets/background-image.png')} resizeMode="cover" style={styles.image} >
 
-                    <View style={StyleSheet.titleBox}>
-                        <Text style={StyleSheet.title}>Chat App</Text>
+                    <View style={styles.titleBox}>
+                        <Text style={styles.title}>Chat App</Text>
                     </View>
                      
-                     <View style={StyleSheet.box1}>
-                         <View style={StyleSheet.inputBox}>
+                     <View style={styles.box1}>
+                         <View style={styles.inputBox}>
                              
                              <TextInput
-                                style={StyleSheet.input}
+                                style={styles.input}
                                 onChangeText={(text) => this.setState({ name: text})}
                                 value={this.state.name}
                                 placeholder='Your Name'
                             />
                          </View>
 
-                         <View style={StyleSheet.colorBox}>
-                             <Text style={StyleSheet.chooseColor}>Choose Background Color:</Text>
+                         <View style={styles.colorBox}>
+                             <Text style={styles.chooseColor}>Choose Background Color:</Text>
                          </View>
 
                          <Pressable
-                            style={StyleSheet.button}
+                            style={styles.button}
                             onPress={() => this.props.navigation.navigate('Chat', {
                               name: this.state.name,
                               bgColor: this.state.bgColor
                             })}>
-                                <Text style={StyleSheet.buttonText}>Start Chatting</Text>
+                                <Text style={styles.buttonText}>Start Chatting</Text>
                             </Pressable>
                      </View>
                 </ImageBackground>
