@@ -1,5 +1,4 @@
 import React from 'react';
-//import { StyleSheet } from 'react-native';
 //importing the two screens the user will navigate between 
 import Chat from './components/Chat';
 import Start from './components/Start';
@@ -29,12 +28,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-/*const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#7661b2',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})*/

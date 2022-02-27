@@ -1,191 +1,230 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
+import { View, Text,  StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+const colors = {
+  color1: "#090C08",
+  color2: "#474056",
+  color3: "#8A95A5",
+  color4: "#B9C6AE"
+}
+
+let bgColor ='';
 
 export default class Start extends React.Component {
-    constructor(props) {
-        super(props);
-
-        //state will be updated whit whatever values change for the specific state
-        this.state = { 
-            name: '',
-            bgColor: ''
-    };
-}
-
-       //updates the state with the background color for the Chat screen choosen by the user
-       changeBgColor = (newColor) => {
-           this.setState({ bgColor: newColor});
-       };
-
-       //background colors for the user to choose from
-       colors = {
-        dark: '#090C08',
-        purple: '#474056',
-        blue: '#8A95A5',
-        green: '#B9C6AE'
-       }
-
-    render() {
-        return (
-            <View style={styles.container}>
-
-            <ImageBackground  source={require('../assets/background-image.png')} resizeMode="cover" style={styles.image} >
-
-                    <View style={styles.titleBox}>
-                        <Text style={styles.title}>Chat App</Text>
-                    </View>
-                     
-                     <View style={styles.box1}>
-                         <View style={styles.inputBox}>
-                             
-                             <TextInput
-                                style={styles.input}
-                                onChangeText={(text) => this.setState({ name: text})}
-                                value={this.state.name}
-                                placeholder='Your Name'
-                            />
-                         </View>
-
-                         <View style={styles.colorBox}>
-                             <Text style={styles.chooseColor}>Choose Background Color:</Text>
-                         </View>
-
-                         <Pressable
-                            style={styles.button}
-                            onPress={() => this.props.navigation.navigate('Chat', {
-                              name: this.state.name,
-                              bgColor: this.state.bgColor
-                            })}>
-                                <Text style={styles.buttonText}>Start Chatting</Text>
-                            </Pressable>
-                     </View>
-                </ImageBackground>
-            </View>
-           
-        );
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      bgColor: '',
     }
+  };
+
+  //background of chat screen
+  changeBgColor = (newColor) => {
+    bgColor = colors.color1;
+    this.setState({ bgColor: newColor });
+  };
+
+  render() {
+    return (
+      <ImageBackground source={require('../assets/background-image.png')} resizeMode='cover' style={styles.image}>
+        <View style={styles.container}>
+
+          <Text style={styles.title}>ChatApp</Text>
+
+          <View style={styles.box1}>
+
+            <View style={styles.input}>
+              <Icon name='user' size={30} color='#888' style={styles.icon}/>
+              <TextInput
+                style={styles.inputText}
+                onChange={(name) => this.setState({name})}
+                value={this.state.name} 
+                placeholder='Your Name'/> 
+            </View>
+
+            <View style={styles.colorBox}>
+              <View style={styles.colorTextBox}>
+                <Text style={styles.colorText}>Choose Background Color:</Text>
+              </View>
+
+              <View style={styles.color}>
+                <TouchableOpacity style={styles.color1} onPress={() => this.changeBgColor(colors.color1)}></TouchableOpacity>
+                <TouchableOpacity style={styles.color2} onPress={() => this.changeBgColor(colors.color2)}></TouchableOpacity>
+                <TouchableOpacity style={styles.color3} onPress={()=>  this.changeBgColor(colors.color3)}></TouchableOpacity>
+                <TouchableOpacity style={styles.color4} onPress={() => this.changeBgColor(colors.color4)}></TouchableOpacity>
+              </View>
+            </View>
+
+              <View style={styles.button}>
+               <TouchableOpacity 
+              style={styles.buttonHeight} onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, bgColor: this.state.bgColor } )}>
+            <Text style={styles.buttonText}>Start Chatting</Text></TouchableOpacity> 
+        </View>
+
+            
+          </View>
+        </View>
+      </ImageBackground>
+    )
+  };
 }
 
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
-      flex: 1, 
-    },
-  
-    backgroundImage: {
       flex: 1,
-      width: '100%',
-      alignItems: 'center',
       justifyContent: 'center',
-    },
-  
-    titleBox: {
-      height: '50%',
-      width: '88%',
       alignItems: 'center',
-      paddingTop: 100
+      flexShrink: 1,
     },
-  
-    title: {
-      fontSize: 45, 
-      fontWeight: "600", 
-      color: '#FFFFFF',
-    },
-  
-    box1: {
-      backgroundColor: 'white', 
-      height: '44%',
-      width: '88%',
-      justifyContent: 'space-around', 
-      alignItems: 'center',
-  
-    },
-  
-    inputBox: {
-      borderWidth: 2,
-      borderRadius: 1,
-      borderColor: 'grey',
-      width: '88%',
-      height: 60,
-      paddingLeft: 20,
-      flexDirection: 'row',
-      alignItems: 'center'
-    },
-  
-    image: {
-      width: 20,
-      height: 20,
-      marginRight: 10
-    },
-  
-    input: {
-      fontSize: 16, 
-      fontWeight: "300", 
-      color: '#757083', 
-      opacity: 0.5,
-    },
-  
-    colorBox: {
-      marginRight: 'auto',
-      paddingLeft: 15,
-      width: '88%'
-    },
-  
-    chooseColor: {
-      fontSize: 16, 
-      fontWeight: "300", 
-      color: '#757083', 
-      opacity: 1,
-    },
-  
-    colorArray: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '88%',
-      paddingRight: 60
-    },
-  
-    color1: {
-      backgroundColor: '#090C08',
-      width: 50,
-      height: 50,
-      borderRadius: 25
-    },
-  
-    color2: {
-      backgroundColor: '#474056',
-      width: 50,
-      height: 50,
-      borderRadius: 25
-    },
-  
-    color3: {
-      backgroundColor: '#8A95A5',
-      width: 50,
-      height: 50,
-      borderRadius: 25
-    },
-  
-    color4: {
-      backgroundColor: '#B9C6AE',
-      width: 50,
-      height: 50,
-      borderRadius: 25
-    },
-  
-    button: {
-      width: '88%',
-      height: 70,
-      backgroundColor: '#757083',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-  
+   
+   box1: {
+     marginBottom: 30,
+     height: '44%',
+     width: '88%',
+     backgroundColor: '#FFFFFF',
+     justifyContent: 'space-evenly',
+     alignItems: 'center',
+     flexShrink: 0,
+   },
+
+   title: {
+     flex: 1,
+     fontSize: 45,
+     fontWeight: '600',
+     color: '#FFFFFF',
+     marginTop: 50,
+     justifyContent: 'center',
+     alignItems: 'center'
+   },
+
+   image: {
+     justifyContent: 'center',
+     width: '100%',
+     height: '100%'
+   },
+
+   button: {
+     height: 70,
+     width: '88%',
+     marginBottom: -15,
+     flexShrink: 0,
+   },
+
+   buttonHeight: {
+     backgroundColor: '#757083',
+     height: '60',
+     width: '100%',
+     flexDirection: 'row',
+     justifyContent: 'space-around',
+     alignItems: 'stretch',
+   },
+
     buttonText: {
       color: '#FFFFFF',
       fontSize: 16,
-      fontWeight: "600"
-    }
-  });
+      fontWeight: 'bold',
+      marginTop:15,
+    },
+
+    color: { 
+      width: 50,
+      height: 50,
+      borderRadius: 25, 
+      marginRight: 10,
+      marginLeft: 0,
+      width: 250,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      flexShrink: 0,
+      alignItems: "flex-start",
+      flexShrink:0,
+      
+    },
+
+    color1: {
+     backgroundColor: '#090C08',
+     width: 50,
+     height: 50,
+     borderRadius: 25,
+     borderColor:'#090C08',
+    },
+
+    color2: {
+     backgroundColor: '#474056',
+     width: 50,
+      height: 50,
+      borderRadius: 25, 
+   },
+
+   color3: {
+     backgroundColor: '#8A95A5',
+     width: 50,
+      height: 50,
+      borderRadius: 25, 
+   },
+
+   color4: {
+     backgroundColor: '#B9C6AE',
+     width: 50,
+      height: 50,
+      borderRadius: 25, 
+   },
+
+   colorBox: {
+     width: '88%',
+     height: 100,
+     justifyContent: 'center',
+     alignItems: 'center', 
+     position: 'relative',
+     marginRight: 40,
+     flexShrink: 0,
+   },
+
+   input: {
+     alignItems: "flex-start",
+     flexDirection: "row",
+     height: 60,
+     width: '88%',
+     borderColor: '#757083',
+     borderWidth: 1,
+     position: 'relative',
+     marginTop: -5,
+     marginBottom: -5,
+     flexShrink: 0,
+   },
+
+   icon: {
+     margin: 10,
+     opacity: .5, 
+   },
+
+   inputText: {
+     marginTop:15,
+     marginLeft: 2,
+     opacity: .5,
+     fontSize: 16,
+     fontWeight: '300',
+     color: '#757083',
+   },
+
+   colorText: {
+     color: '#757083',
+     fontWeight: '300', 
+     fontSize: 16,
+     opacity: 1,
+     marginBottom: 9,
+     marginLeft: 5,
+   },
+
+   colorTextBox: {
+     alignItems: "stretch",
+     width: '88%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+   }
+ })
+
 
