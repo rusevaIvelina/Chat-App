@@ -40,7 +40,7 @@ export default class Start extends React.Component {
               <Icon name='user' size={30} color='#888' style={styles.icon}/>
               <TextInput
                 style={styles.inputText}
-                onChange={(name) => this.setState({name})}
+                onChangeText={(text) => this.setState({ name: text} )}
                 value={this.state.name} 
                 placeholder='Your Name'/> 
             </View>
@@ -115,7 +115,7 @@ export default class Start extends React.Component {
 
    buttonHeight: {
      backgroundColor: '#757083',
-     height: '60',
+     height: 60,
      width: '100%',
      flexDirection: 'row',
      justifyContent: 'space-around',
