@@ -192,7 +192,7 @@ export default class Start extends React.Component {
      position: 'relative',
      marginTop: -5,
      marginBottom: -5,
-  
+     flexShrink: 0,
    },
 
    icon: {
