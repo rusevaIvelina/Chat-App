@@ -126,7 +126,7 @@ export default class Start extends React.Component {
       color: '#FFFFFF',
       fontSize: 16,
       fontWeight: 'bold',
-      marginTop:15,
+      marginTop: 15,
     },
 
     color: { 
@@ -140,8 +140,7 @@ export default class Start extends React.Component {
       justifyContent: 'space-between',
       flexShrink: 0,
       alignItems: "flex-start",
-      flexShrink:0,
-      
+      flexShrink :0,
     },
 
     color1: {
@@ -149,7 +148,7 @@ export default class Start extends React.Component {
      width: 50,
      height: 50,
      borderRadius: 25,
-     borderColor:'#090C08',
+     borderColor: '#090C08',
     },
 
     color2: {
@@ -202,7 +201,7 @@ export default class Start extends React.Component {
    },
 
    inputText: {
-     marginTop:15,
+     marginTop: 15,
      marginLeft: 2,
      opacity: .5,
      fontSize: 16,
@@ -222,8 +221,8 @@ export default class Start extends React.Component {
    colorTextBox: {
      alignItems: "stretch",
      width: '88%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+     flexDirection: 'row',
+     justifyContent: 'space-between',
    }
  })
 
