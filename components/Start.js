@@ -38,7 +38,9 @@ export default class Start extends React.Component {
 
             <View style={styles.input}>
               <Icon name='user' size={30} color='#888' style={styles.icon}/>
-              <TextInput
+              <TextInput accessible={true}
+                accessibilityLabel='Your name'
+                accessibilityHint='Type your name to enter the chat room'
                 style={styles.inputText}
                 onChangeText={(text) => this.setState({ name: text} )}
                 value={this.state.name} 
@@ -75,8 +77,11 @@ export default class Start extends React.Component {
             </View>
 
               <View style={styles.button}>
-               <TouchableOpacity 
-              style={styles.buttonHeight} onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, bgColor: this.state.bgColor } )}>
+               <TouchableOpacity accessible={true}
+                 accessibilityLabel='Start chatting'
+                 accessibilityHint='Lets you enter the chat room'
+                 accessibilityRole='button'
+                 style={styles.buttonHeight} onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, bgColor: this.state.bgColor } )}>
             <Text style={styles.buttonText}>Start Chatting</Text></TouchableOpacity> 
         </View>
 

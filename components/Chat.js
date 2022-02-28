@@ -11,10 +11,27 @@ export default class Chat extends React.Component {
     }
 
     componentDidMount() {
-        //Sets the page title once the Chat is loaded
-        let name = this.props.route.params.name;
-        //Adss the name to the top of the screen
-        this.props.navigation.setOptions({ title: name });
+        this.setState({
+            messages: [
+                {
+                    _id: 1,
+                    text: 'Hey You',
+                    createdAt: new Date(),
+                    user: {
+                        _id: 2,
+                        name: 'React Native',
+                        avatar: 'https://placeimg.com/140/140/any',
+                    },
+                },
+                {
+                    _id: 2,
+                    text: 'Welcome to the Chat Room',
+                    createdAt: new Date(),
+                    system: true,
+                },
+
+            ]
+        })
     }
 
     onSend(messages = []) {
@@ -22,7 +39,7 @@ export default class Chat extends React.Component {
             messages: GiftedChat.append(previousState.messages, messages),
         }))
     }
-    
+
     //changes the color of the bubble 
     renderBubble(props) {
         return (
@@ -30,7 +47,7 @@ export default class Chat extends React.Component {
               {...props}
               wrapperStyle={{
                   right: {
-                      backgroundColor: '#000'
+                      backgroundColor: '#00ced1'
                   }
               }}
             />
