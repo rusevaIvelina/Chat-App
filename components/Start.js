@@ -51,10 +51,26 @@ export default class Start extends React.Component {
               </View>
 
               <View style={styles.color}>
-                <TouchableOpacity style={styles.color1} onPress={() => this.changeBgColor(colors.color1)}></TouchableOpacity>
-                <TouchableOpacity style={styles.color2} onPress={() => this.changeBgColor(colors.color2)}></TouchableOpacity>
-                <TouchableOpacity style={styles.color3} onPress={()=>  this.changeBgColor(colors.color3)}></TouchableOpacity>
-                <TouchableOpacity style={styles.color4} onPress={() => this.changeBgColor(colors.color4)}></TouchableOpacity>
+                <TouchableOpacity accessible={true}
+                  accessibilityLabel='black background'
+                  accessibilityHint='Adds black background to the chat screen'
+                  accessibilityRole='button'
+                  style={styles.color1} onPress={() => this.changeBgColor(colors.color1)}></TouchableOpacity>
+                <TouchableOpacity accessible={true}
+                  accessibilityLabel='purple background'
+                  accessibilityHint='Adds purple background to the chat screen'
+                  accessibilityRole='button'
+                  style={styles.color2} onPress={() => this.changeBgColor(colors.color2)}></TouchableOpacity>
+                <TouchableOpacity accessible={true}
+                  accessibilityLabel='blue background'
+                  accessibilityHint='Adds blue background to the chat screen'
+                  accessibilityRole='button'
+                  style={styles.color3} onPress={()=>  this.changeBgColor(colors.color3)}></TouchableOpacity>
+                <TouchableOpacity accessible={true}
+                  accessibilityLabel='green background'
+                  accessibilityHint='Adds green background to the chat screen'
+                  accessibilityRole='button'
+                  style={styles.color4} onPress={() => this.changeBgColor(colors.color4)}></TouchableOpacity>
               </View>
             </View>
 
