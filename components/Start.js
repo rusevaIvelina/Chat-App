@@ -183,7 +183,7 @@ export default class Start extends React.Component {
    },
 
    input: {
-     alignItems: "flex-start",
+     alignItems: 'flex-start',
      flexDirection: "row",
      height: 60,
      width: '88%',
@@ -192,7 +192,7 @@ export default class Start extends React.Component {
      position: 'relative',
      marginTop: -5,
      marginBottom: -5,
-     flexShrink: 0,
+  
    },
 
    icon: {
