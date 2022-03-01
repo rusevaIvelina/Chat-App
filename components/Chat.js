@@ -1,16 +1,76 @@
 import React from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
+import  firebase from 'firebase';
+import 'firebase/firestone';
 
-export default class Chat extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            messages: [],
+const firebaseConfig = {
+    apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
+    authDomain: "test-6145a.firebaseapp.com",
+    projectId: "test-6145a",
+    storageBucket: "test-6145a.appspot.com",
+    messagingSenderId: "477716821300",
+    appId: "1:477716821300:web:23e6aa11afba2868d9e161",
+    measurementId: "G-09K86M3VQN"
+  };
+
+
+  export default class Chat extends Component {
+
+    constructor(){
+      super();
+      this.state ={
+        messages: [],
+        uid: 0,
+        user: {
+          _id: "",
+          name: "",
+          avatar: "",
         }
     }
 
-    componentDidMount() {
+    //initialize firebase
+  if (!firebase.apps.length){
+    firebase.initializeApp(firebaseConfig);
+    }
+  // reference to the Firestore messages collection
+  this.referenceChatMessages = firebase.firestore().collection("messages");
+  this.refMsgUser = null;
+  
+  onCollectionUpdate = QuerySnapshot => {
+      const messages = [];
+      //go through each document
+      QuerySnapshot.forEach(doc => {
+          //get the queryDocumentSnapshot's data
+          let data = doc.data();
+          messages.push({
+              _id: data._id,
+              text: data.text,
+              createdAt: data.createdAt.toDate(),
+              user: {
+                  _id: data.user._id,
+                  name: data.user.name,
+                  avatar: data.user.avatar
+              }
+          });
+      });
+      this.setState({
+          messages: messages
+      });
+  }
+
+  //Add messages to database 
+  const message = this.state.messages[0];
+  //add new message to collection
+  this.referenceChatMessages.add({
+      _id: message._id,
+      text: message.text || '',
+      createdAt: message.createdAt,
+      user: this.state.user
+  });
+
+
+    componentDidMount() 
         let name = this.props.route.params.name;
         this.props.navigation.setOptions({ title: name });
         this.setState({
