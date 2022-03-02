@@ -17,22 +17,19 @@ const firebaseConfig = {
 
   export default class Chat extends Component {
 
-    constructor(){
+    constructor() {
       super();
       this.state ={
         messages: [],
         uid: 0,
-        user: {
-          _id: "",
-          name: "",
-          avatar: "",
-        }
-    }
+        loggedInText: 'Please wait, you are getting logged in'
+    };
 
     //initialize firebase
-  if (!firebase.apps.length){
-    firebase.initializeApp(firebaseConfig);
-    }
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+    };
+
   // reference to the Firestore messages collection
   this.referenceChatMessages = firebase.firestore().collection("messages");
   this.refMsgUser = null;
@@ -57,7 +54,7 @@ const firebaseConfig = {
       this.setState({
           messages: messages
       });
-  }
+  };
 
   //Add messages to database 
   const message = this.state.messages[0];
@@ -68,33 +65,17 @@ const firebaseConfig = {
       createdAt: message.createdAt,
       user: this.state.user
   });
+}
 
-
-    componentDidMount() 
-        let name = this.props.route.params.name;
-        this.props.navigation.setOptions({ title: name });
-        this.setState({
-            messages: [
-                {
-                    _id: 1,
-                    text: 'Hey You',
-                    createdAt: new Date(),
-                    user: {
-                        _id: 2,
-                        name: 'React Native',
-                        avatar: 'https://placeimg.com/140/140/any',
-                    },
-                },
-                {
-                    _id: 2,
-                    text: 'Welcome to the Chat Room',
-                    createdAt: new Date(),
-                    system: true,
-                },
-
-            ]
-        })
-    }
+componentWillUnmount() {
+    // close connections when we close the app
+    NetInfo.fetch().then((connection) => {
+      if (connection.isConnected) {
+        this.unsubscribe();
+        this.authUnsubscribe();
+      }
+    });
+  }
 
     onSend(messages = []) {
         this.setState(previousState => ({
@@ -116,6 +97,16 @@ const firebaseConfig = {
         )
     }
 
+    componentWillUnmount() {
+        // close connections when we close the app
+        NetInfo.fetch().then((connection) => {
+          if (connection.isConnected) {
+            this.unsubscribe();
+            this.authUnsubscribe();
+          }
+        });
+      }
+
     render() {
         let bgColor = this.props.route.params.bgColor;
 
@@ -135,8 +126,7 @@ const firebaseConfig = {
             }
             </View>
         </View>
-            
-            
+    
         );
     }
 }
