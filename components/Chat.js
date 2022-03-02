@@ -24,7 +24,7 @@ const firebaseConfig = {
         uid: 0,
         loggedInText: 'Please wait, you are getting logged in'
     };
-
+  
     //initialize firebase
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
@@ -67,15 +67,20 @@ const firebaseConfig = {
   });
 }
 
-componentWillUnmount() {
-    // close connections when we close the app
-    NetInfo.fetch().then((connection) => {
-      if (connection.isConnected) {
-        this.unsubscribe();
-        this.authUnsubscribe();
-      }
+componentDidMount() {
+  this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      firebase.auth().signInAnonymously();
+    }
+    this.setState({
+      uid: user.uid,
+      messages: [],
     });
-  }
+    this.unsubscribe = this.referenceChatMessages
+      .orderBy("createdAt", "desc")
+      .onSnapshot(this.onCollectionUpdate);
+  });
+}
 
     onSend(messages = []) {
         this.setState(previousState => ({
