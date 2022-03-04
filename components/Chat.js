@@ -1,8 +1,9 @@
 import React from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
-import  firebase from 'firebase';
-import 'firebase/firestone';
+import firebase from 'firebase';
+import 'firebase/firestore';
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
@@ -14,18 +15,22 @@ const firebaseConfig = {
     measurementId: "G-09K86M3VQN"
   };
 
-
-  export default class Chat extends Component {
-
+  export default class Chat extends React.Component {
     constructor() {
       super();
-      this.state ={
+      this.state = {
         messages: [],
         uid: 0,
-        loggedInText: 'Please wait, you are getting logged in'
-    };
+        loggedInText: 'Please wait, you are getting logged in',
+        user: {
+          _id: '',
+          name: '',
+          avatar: ''
+        }
+      }
+      
   
-    //initialize firebase
+  //initialize firebase
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
     };
@@ -47,8 +52,9 @@ const firebaseConfig = {
               user: {
                   _id: data.user._id,
                   name: data.user.name,
-                  avatar: data.user.avatar
-              }
+                  avatar: data.user.avatar,
+              },
+              image: data.image || null,
           });
       });
       this.setState({
@@ -56,32 +62,22 @@ const firebaseConfig = {
       });
   };
 
-  //Add messages to database 
-  const message = this.state.messages[0];
-  //add new message to collection
-  this.referenceChatMessages.add({
-      _id: message._id,
-      text: message.text || '',
-      createdAt: message.createdAt,
-      user: this.state.user
-  });
-}
-
-componentDidMount() {
-  this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      firebase.auth().signInAnonymously();
-    }
-    this.setState({
-      uid: user.uid,
-      messages: [],
+  componentDidMount(); {
+    this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        firebase.auth().signInAnonymously();
+      }
+      this.setState({
+        uid: user.uid,
+        messages: [],
+      });
+      this.unsubscribe = this.referenceChatMessages
+        .orderBy("createdAt", "desc")
+        .onSnapshot(this.onCollectionUpdate);
     });
-    this.unsubscribe = this.referenceChatMessages
-      .orderBy("createdAt", "desc")
-      .onSnapshot(this.onCollectionUpdate);
-  });
-}
+  }}
 
+    //attaches messages to chat
     onSend(messages = []) {
         this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
@@ -100,7 +96,7 @@ componentDidMount() {
               }}
             />
         )
-    }
+   }
 
     componentWillUnmount() {
         // close connections when we close the app
@@ -133,10 +129,11 @@ componentDidMount() {
         </View>
     
         );
-    }
-}
+     }
+ }
  const styles = StyleSheet.create({
      container: {
          flex: 1
      }
  })
+
