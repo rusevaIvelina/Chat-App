@@ -16,7 +16,7 @@ const firebaseConfig = {
     measurementId: "G-09K86M3VQN"
   };
 
-  export default class Chat extends Component {
+  export default class Chat extends React.Component {
     constructor() {
       super();
       this.state = {
@@ -134,8 +134,8 @@ const firebaseConfig = {
         let bgColor = this.props.route.params.bgColor;
 
         return(
-          <View style={StyleSheet.container}>
-            <View style={{...StyleSheet.container, backgroundColor: bgColor ? bgColor: '#FFF'}}>
+          <View style={styles.container}>
+            <View style={{...styles.container, backgroundColor: bgColor ? bgColor: '#FFF'}}>
               
               <GiftedChat
                renderBubble={this.renderBubble.bind(this)}
