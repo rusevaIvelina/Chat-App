@@ -1,10 +1,10 @@
 import React from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
+import { LogBox } from 'react-native';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
@@ -34,6 +34,9 @@ const firebaseConfig = {
       }
       this.referenceChatMessages = firebase.firestore().collection('messages');
       this.refMsgUser = null;
+
+      //removes warning message in the console
+      LogBox.ignoreLogs(['Setting a timer for a long period of time']);
     }
 
     onCollectionUpdate = QuerySnapshot => {
@@ -106,7 +109,6 @@ const firebaseConfig = {
             messages: GiftedChat.append(previousState.messages, messages),
           }),
           () => {
-            this.saveMessages();
             this.addMessages();
           });
       }
