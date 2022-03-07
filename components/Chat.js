@@ -1,10 +1,12 @@
 import React from 'react';
-import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, InputToolbar } from 'react-native-gifted-chat';
 import { View, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { LogBox } from 'react-native';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NetInfo from '@react-native-community/netinfo';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
@@ -60,9 +62,51 @@ const firebaseConfig = {
       })
     };
 
+    //get messages from AsyncStorage
+    getMessages = async () => {
+      let messages ='';
+      try {
+        messages = (await AsyncStorage.getItem('messages')) || [];
+        this.setState({
+          messages: JSON.parse(messages),
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    //saves messages on the AsyncStorage
+    saveMessages = async () => {
+      try {
+        await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+
+    deleteMessages = async () => {
+      try {
+        await AsyncStorage.removeItem('messages');
+        this.setState({
+          messages: [],
+        })
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+
     componentDidMount() {
       let { name } = this.props.route.params;
+      //Adds the name on top of screen
       this.props.navigation.setOptions({ title: name })
+
+      //Find out the user's connection status
+      NetInfo.fetch().then(connection => {
+        if(connection.isConnected) {
+          this.setState({ isConnected: true});
+          console.log('online')
+        }
+      })
 
       this.unsubscribe = this.referenceChatMessages
 					.orderBy('createdAt', 'desc')
@@ -110,7 +154,19 @@ const firebaseConfig = {
           }),
           () => {
             this.addMessages();
+            this.saveMessages();
           });
+      }
+
+      renderInputToolBar(props) {
+        if (this.state.isConnected == false) {
+        } else {
+          return(
+            <InputToolbar
+            {...props}
+            />
+          )
+        }
       }
 
       //changes the color of the bubble
