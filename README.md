@@ -10,4 +10,13 @@ before joining the chat.
 and location data.
 ● Data gets stored online and offline.
 
-More info coming soon
+Tools
+● Node.js
+● React Native
+● Expo
+● Google Firebase
+● Gifted chat
+
+Installation
+● Fork or download directly this repo
+● npm install or yarn install on the terminal to install all dependencies

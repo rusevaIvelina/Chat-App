@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as Location from 'expo-location';
+import * as Location from 'expo-location'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -11,30 +11,30 @@ import 'firebase/compat/firestore';
 export default class CustomActions extends React.Component {
 
 //allow user to pick image from phone library
- pickImage = async () => {
-        //permission to access media library
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        try {
-            if (status === 'granted') {
-                let result = await ImagePicker.launchImageLibraryAsync({
-                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                }).catch((error) => {
-                    console.error(error);
-                });
-                if (!result.cancelled) {
-                    const imageUrl = await this.uploadImage(result.uri);
-                    this.props.onSend({ image: imageUrl});
-                }
-        }
-    } catch (error) {
-        console.error(error)
+pickImage = async () => {
+    //permission to access media library
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    try {
+        if (status === 'granted') {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            }).catch((error) => {
+                console.error(error);
+            });
+            if (!result.cancelled) {
+                const imageUrl = await this.uploadImage(result.uri);
+                this.props.onSend({ image: imageUrl});
+            }
     }
- }
+} catch (error) {
+    console.error(error)
+}
+}
 
 //allows user to take photo from camera
   takePhoto = async () => {
     //permission to access camera and media library
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
     try {
         if (status === 'granted') {
             let result = await ImagePicker.launchCameraAsync({
@@ -52,7 +52,7 @@ export default class CustomActions extends React.Component {
     }
 };
 
-//upload image, BLOB (BINARY LARGE OBJECT)
+//upload image, BLOB (BINARY LARGE OBJECT), uploads image to firebase 
 uploadImage = async () => {
     const blob = await new Promise((resolve, reject) => {
         const xhr = newXMLHttpRequest();
