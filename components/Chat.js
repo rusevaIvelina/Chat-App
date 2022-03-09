@@ -7,15 +7,18 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
+import MapView from 'react-native-maps';
+import CustomActions from './CustomActions';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
-    authDomain: "test-6145a.firebaseapp.com",
-    projectId: "test-6145a",
-    storageBucket: "test-6145a.appspot.com",
-    messagingSenderId: "477716821300",
-    appId: "1:477716821300:web:23e6aa11afba2868d9e161",
-    measurementId: "G-09K86M3VQN"
+  apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
+  authDomain: "test-6145a.firebaseapp.com",
+  projectId: "test-6145a",
+  storageBucket: "test-6145a.appspot.com",
+  messagingSenderId: "477716821300",
+  appId: "1:477716821300:web:23e6aa11afba2868d9e161",
+  measurementId: "G-09K86M3VQN"
+  
   };
 
   export default class Chat extends React.Component {
@@ -28,9 +31,13 @@ const firebaseConfig = {
           _id: '',
           name: '',
           avatar: '',
-        }
+        },
+        isConnected: false,
+        image: null,
+        location: null
       };
-
+      
+      //initialise firebase
       if(!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
       }
@@ -55,6 +62,8 @@ const firebaseConfig = {
             name: data.user.name,
             avatar: data.user.avatar,
           },
+          image: data.image || null,
+          location: data.location || null,
         })
       })
       this.setState({
@@ -83,7 +92,8 @@ const firebaseConfig = {
         console.log(error.message)
       }
     };
-
+    
+     //deleted message from AsynStorage 
     deleteMessages = async () => {
       try {
         await AsyncStorage.removeItem('messages');
@@ -135,7 +145,9 @@ const firebaseConfig = {
                   .collection('messages')
                   .where('uid', '===', this.state.uid);
           });
+          
     }
+
       addMessages() {
           const message = this.state.messages[0];
           //add a new message to the collection
@@ -143,7 +155,9 @@ const firebaseConfig = {
             _id: message._id,
             text: message.text || '',
             createdAt: message.createdAt,
-            user: this.state.user
+            user: this.state.user,
+            image: message.image || '',
+            location: message.location || null
           });
         }
       
@@ -169,6 +183,33 @@ const firebaseConfig = {
         }
       }
 
+      renderCustomView(props) {
+        const { currentMessage } = props;
+        if (currentMessage.location) {
+          return (
+            <MapView
+              style={{
+                width: 150,
+                height: 100,
+                borderRadius: 13,
+                margin: 3
+              }}
+              region = {{
+                latitude: currentMessage.location.latitude,
+                longitude: currentMessage.location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421
+              }}
+              />
+          )
+        }
+        return null;;;
+      }
+
+      renderCustomActions(props) {
+        return <CustomActions {...props}/>
+      };
+
       //changes the color of the bubble
       renderBubble(props) {
         return (
@@ -184,9 +225,15 @@ const firebaseConfig = {
       }
 
       componentWillUnmount() {
-        this.unsubscribe();
-        this.authUnsubscribe();
+        //cloess connections when the user closes the app
+        NetInfo.fetch().then((connection)=> {
+          if (connection.isConnected) {
+            this.unsubscribe();
+            this.authUnsubscribe();
+          }
+        });
       }
+       
 
       render() {
         let bgColor = this.props.route.params.bgColor;
@@ -197,10 +244,15 @@ const firebaseConfig = {
               
               <GiftedChat
                renderBubble={this.renderBubble.bind(this)}
+               renderInputToolbar={this.renderInputToolBar.bind(this)}
+               renderActions={this.renderCustomActions}
+               renderCustomView={this.renderCustomView}
                messages={this.state.messages}
                onSend={messages => this.onSend(messages)}
                user={{
-                 _id: 1,
+                 _id: this.state.user._id,
+                 name: this.state.name,
+                 avatar: this.state.user.avatar
                }}/>
                {Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height'/>
                : null
