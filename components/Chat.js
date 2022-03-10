@@ -146,14 +146,8 @@ const firebaseConfig = {
           });
           //saves messages locally to AsyncStorage 
            this.saveMessages()
-          } else {
-           //if the user is offline
-          this.setState({ isConnected: false });
-          console.log('offline');
-          this.getMessages();
-        }
-      })
-    }
+          } 
+    
 
       addMessages() {
           const message = this.state.messages[0];
@@ -212,7 +206,8 @@ const firebaseConfig = {
         }
         return null;
       }
-
+      
+      //action button to access custom features 
       renderCustomActions(props) {
         return <CustomActions {...props}/>
       };
