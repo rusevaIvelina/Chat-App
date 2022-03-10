@@ -144,7 +144,15 @@ const firebaseConfig = {
                   .collection('messages')
                   .where('uid', '===', this.state.uid);
           });
-          
+          //saves messages locally to AsyncStorage 
+           this.saveMessages()
+          } else {
+           //if the user is offline
+          this.setState({ isConnected: false });
+          console.log('offline');
+          this.getMessages();
+        }
+      })
     }
 
       addMessages() {
@@ -202,7 +210,7 @@ const firebaseConfig = {
               />
           )
         }
-        return null;;;
+        return null;
       }
 
       renderCustomActions(props) {
