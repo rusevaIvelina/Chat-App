@@ -12,13 +12,13 @@ import CustomActions from './CustomActions';
 
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID
-  };
+  authDomain: "chat-10147.firebaseapp.com",
+  projectId: "chat-10147",
+  storageBucket: "chat-10147.appspot.com",
+  messagingSenderId: "559585991829",
+  appId: "1:559585991829:web:6902e1a7d6e379c0c90f9c",
+  measurementId: "G-9JDCZNY7K9"
+};
 
   export default class Chat extends React.Component {
     constructor() {
