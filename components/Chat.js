@@ -11,13 +11,13 @@ import MapView from 'react-native-maps';
 import CustomActions from './CustomActions';
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: "chat-10147.firebaseapp.com",
-  projectId: "chat-10147",
-  storageBucket: "chat-10147.appspot.com",
-  messagingSenderId: "559585991829",
-  appId: "1:559585991829:web:6902e1a7d6e379c0c90f9c",
-  measurementId: "G-9JDCZNY7K9"
+  apiKey: "AIzaSyDgF6f_6SFQ0s-R8nAjtqPImE30XxWl6Mo",
+  authDomain: "test-6145a.firebaseapp.com",
+  projectId: "test-6145a",
+  storageBucket: "test-6145a.appspot.com",
+  messagingSenderId: "477716821300",
+  appId: "1:477716821300:web:23e6aa11afba2868d9e161",
+  measurementId: "G-09K86M3VQN"
 };
 
   export default class Chat extends React.Component {
