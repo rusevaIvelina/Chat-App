@@ -2,7 +2,7 @@
 
 Chat App is a an app for mobile devices using React Native. The app will provide users with a chat interface and options to share image and their location.
 
-Key Features
+## Key Features
 
 ● A page where users can enter their name and choose a background color for the chat screen
 before joining the chat.
