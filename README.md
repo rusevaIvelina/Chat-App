@@ -14,7 +14,7 @@ and location data.
 
 ● Data gets stored online and offline.
 
-Tools
+## Tools
 
 ● Node.js
 
@@ -26,7 +26,7 @@ Tools
 
 ● Gifted chat
 
-Installation
+## Installation
 
 ● Fork or download directly this repo
 
